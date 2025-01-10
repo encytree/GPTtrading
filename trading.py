@@ -3,6 +3,7 @@ import os
 import time
 import pyupbit
 import json
+from openai import OpenAI
 
 # .env 파일 읽어오기
 load_dotenv()
@@ -18,8 +19,6 @@ def GPT_trading():
     df = pyupbit.get_ohlcv("KRW-BTC", count = 30, interval="day")
 
     # 2.GPT에 데이터 제공하고 답변 받기
-
-    from openai import OpenAI
     client = OpenAI()
 
     response = client.chat.completions.create(
