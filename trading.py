@@ -1,5 +1,8 @@
 from dotenv import load_dotenv
 import os
+import time
+import pyupbit
+import json
 
 # .env 파일 읽어오기
 load_dotenv()
@@ -10,10 +13,8 @@ upbit_secret_key = os.getenv("UPBIT_SECRET_KEY")
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
 def GPT_trading():
+
     # 1.업비트 차트 데이터 가져오기(30일 일봉)
-
-    import pyupbit
-
     df = pyupbit.get_ohlcv("KRW-BTC", count = 30, interval="day")
 
     # 2.GPT에 데이터 제공하고 답변 받기
@@ -51,7 +52,6 @@ def GPT_trading():
 
     # 3. 자동 매매 실행하기
 
-    import json
     result = json.loads(result)
 
     # 업비트 로그인
@@ -75,8 +75,6 @@ def GPT_trading():
     elif result["decision"] == "hold" :
         print("Hold")
 
-
 while True :
-    import time
-    time.sleep(10)
     GPT_trading()
+    time.sleep(3600)
